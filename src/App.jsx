@@ -22,11 +22,12 @@ function App() {
         <th>Latin Name</th>
         <th>Actual Name</th>
         <th>Pollinators</th>
-        <th>Conditions</th>
+        <th>Suitable Conditions</th>
         <th>Water Needs</th>
       </tr>
       {plants.map(plant => (
-        <tr key={plant.latin_name}>
+        <tr>
+          <td>{plant.latin_name}</td>
           <td>{plant.common_name}</td>
           <td>{plant.associated_wildlife}</td>
           <td>{plant.suitable_site_conditions}</td>
