@@ -7,13 +7,24 @@ function App() {
   const [plants, setPlants] = useState([])
   const [loading, setLoading] = useState(false)
   useEffect(() => {
-     setLoading(true)
-     fetch('https://data.sfgov.org/resource/vmnk-skih.json?$limit=10')
-     .then(response => response.json())
-     .then(json => setPlants(json))
-     .finally(() => {
-        setLoading(false)
-      })
+    setLoading(true)
+    fetch('https://data.sfgov.org/resource/vmnk-skih.json?$limit=10')
+    .then(response => response.json())
+    .then(json => {
+      const formattedPlants = json.map(plant => {
+        return {
+          latin_name: plant.latin_name || " ",
+          common_name: plant.common_name || " ",
+          associated_wildlife: plant.associated_wildlife ? plant.associated_wildlife.replace(/;/g, ', ') : " ",
+          suitable_site_conditions: plant.suitable_site_conditions ? plant.suitable_site_conditions.replace(/;/g, ', ') : " ",
+          water_needs: plant.water_needs || " ",
+        };
+      });
+      setPlants(formattedPlants);
+    })
+    .finally(() => {
+      setLoading(false)
+    })
   }, [])
   console.log([loading, plants])
   return (
